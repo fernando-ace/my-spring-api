@@ -5,36 +5,37 @@ const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     try {
-/*      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
-      });*/
-        const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-        });
+      });
 
       if (res.ok) {
         const data = await res.json();
         if (data.token) {
           saveToken(data.token);
         }
-        onLoginSuccess(data);
+        if (onLoginSuccess) {
+          onLoginSuccess(data);
+        }
       } else {
         const errorData = await res.json();
         setError(errorData.message || "Login failed");
       }
     } catch (err) {
-      setError("Network error");
+      setError("Network error - please check your connection");
       console.error("Login error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -51,7 +52,8 @@ const Login = ({ onLoginSuccess }) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
+          disabled={isLoading}
+          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400 disabled:opacity-50"
         />
         <input
           type="password"
@@ -59,13 +61,15 @@ const Login = ({ onLoginSuccess }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
+          disabled={isLoading}
+          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400 disabled:opacity-50"
         />
         <button
           type="submit"
-          className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700"
+          disabled={isLoading}
+          className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Login
+          {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
