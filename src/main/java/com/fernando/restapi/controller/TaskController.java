@@ -8,7 +8,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
-@CrossOrigin // if needed for frontend
+//@CrossOrigin // if needed for frontend
+@CrossOrigin(origins = {
+    "http://localhost:3000",
+    "https://improved-fishstick-x54qgw47x75rcpw74-3000.app.github.dev"
+})
 public class TaskController {
 
     private final TaskRepository taskRepository;
