@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import WebSocketDemo from "./components/WebSocketDemo";
 import { isAuthenticated, removeToken } from "./utils/auth";
 
 function App() {
@@ -35,7 +34,6 @@ function App() {
             Logout
           </button>
         </div>
-        <WebSocketDemo />
       </div>
     );
   }
@@ -71,7 +69,6 @@ function App() {
           </>
         )}
       </div>
-      <WebSocketDemo />
     </div>
   );
 }
