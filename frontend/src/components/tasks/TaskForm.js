@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const API_BASE = "https://improved-fishstick-x54qgw47x75rcpw74-8080.app.github.dev/api";
+
 const TaskForm = ({ onTaskAdded }) => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
@@ -10,7 +12,7 @@ const TaskForm = ({ onTaskAdded }) => {
     setLoading(true);
     setError(null);
 
-    fetch("/api/tasks", {
+    fetch(`${API_BASE}/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: title, completed: false }),

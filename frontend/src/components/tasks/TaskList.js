@@ -7,10 +7,12 @@ const TaskList = () => {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
 
+  const API_BASE = "https://improved-fishstick-x54qgw47x75rcpw74-8080.app.github.dev/api";
+
   const fetchTasks = () => {
     setLoading(true);
     setError(null);
-    fetch("/api/tasks")
+    fetch(`${API_BASE}/tasks`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch tasks");
         return res.json();
@@ -27,7 +29,7 @@ const TaskList = () => {
   const deleteTask = (id) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
 
-    fetch(`/api/tasks/${id}`, { method: "DELETE" })
+    fetch(`${API_BASE}/tasks/${id}`, { method: "DELETE" })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to delete task");
         fetchTasks();
@@ -46,7 +48,7 @@ const TaskList = () => {
   };
 
   const saveEdit = (id) => {
-    fetch(`/api/tasks/${id}`, {
+    fetch(`${API_BASE}/tasks/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: editTitle, completed: false }),
@@ -61,7 +63,7 @@ const TaskList = () => {
   };
 
   const toggleCompleted = (task) => {
-    fetch(`/api/tasks/${task.id}`, {
+    fetch(`${API_BASE}/tasks/${task.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: task.name, completed: !task.completed }),
