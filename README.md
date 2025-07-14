@@ -37,7 +37,7 @@ Managing daily tasks can be overwhelming without the right tools. TaskFlow provi
 - H2 Database (in-memory)
 
 **Frontend:**
-- Javascript
+- JavaScript
 - React 19
 - Node.js 18
 - Tailwind CSS 3
