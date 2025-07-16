@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const API_BASE = "https://improved-fishstick-x54qgw47x75rcpw74-8080.app.github.dev/api";
+const API_BASE = "https://verbose-meme-5g9p7q9j5659f7vqj-8080.app.github.dev/api/";
 
 const TaskForm = ({ onTaskAdded }) => {
   const [title, setTitle] = useState("");
