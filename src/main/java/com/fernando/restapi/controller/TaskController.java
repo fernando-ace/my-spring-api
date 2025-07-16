@@ -11,7 +11,7 @@ import java.util.List;
 //@CrossOrigin // if needed for frontend
 @CrossOrigin(origins = {
     "http://localhost:3000",
-    "https://improved-fishstick-x54qgw47x75rcpw74-3000.app.github.dev"
+    "https://verbose-meme-5g9p7q9j5659f7vqj-8080.app.github.dev"
 })
 public class TaskController {
 

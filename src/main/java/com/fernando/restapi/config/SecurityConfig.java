@@ -13,7 +13,6 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .headers(headers -> headers.frameOptions().disable()) // Allow frames for H2 console
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().permitAll()
             );
         return http.build();
