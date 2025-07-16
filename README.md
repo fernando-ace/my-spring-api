@@ -20,7 +20,7 @@ Managing daily tasks can be overwhelming without the right tools. TaskFlow provi
 - **RESTful API:** Well-structured endpoints following REST conventions for easy integration and scalability.
 - **State Management:** Efficient use of React hooks for local state and UI updates.
 - **Cross-Origin Support:** Secure CORS configuration for local and cloud development.
-- **In-Memory Database:** H2 database for rapid prototyping and testing.
+- **Database:** PostgreSQL for persistent storage. (Default setup uses Docker in Codespaces)
 - **Security Best Practices:** Configurable security with Spring Security.
 - **Component-Based Architecture:** Modular frontend and backend code for maintainability.
 - **Easy Local Setup:** Minimal configuration required to run locally.
@@ -34,7 +34,7 @@ Managing daily tasks can be overwhelming without the right tools. TaskFlow provi
 - Spring Boot 3
 - Spring Data JPA
 - Spring Security
-- H2 Database (in-memory)
+- PostgreSQL
 
 **Frontend:**
 - JavaScript
@@ -112,7 +112,7 @@ The frontend will start on [http://localhost:3000](http://localhost:3000)
 
 ## 🚀 Future Improvements
 
-- Persistent database support (PostgreSQL, MySQL)
+- MySQL support (PostgreSQL is now default)
 - User authentication & authorization (JWT, OAuth)
 - Real-time updates (WebSockets)
 - Advanced filtering, sorting, and search
@@ -144,3 +144,37 @@ Email: FernandoJosueAcevedo@gmail.com
 ---
 
 > **Ready to see clean code and modern engineering in action? Clone TaskFlow, try it out, or get in touch to discuss software engineering opportunities!**
+
+## 🐘 PostgreSQL Setup in Codespaces
+
+**Recommended: Use Docker for PostgreSQL in Codespaces**
+
+1. **Stop any system PostgreSQL service (if running):**
+   ```sh
+   sudo service postgresql stop
+   ```
+2. **Start PostgreSQL in Docker:**
+   ```sh
+   docker run --name my-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=yourpassword -e POSTGRES_DB=mydatabase -p 5432:5432 -d postgres:16
+   ```
+3. **Update `src/main/resources/application.properties`:**
+   ```properties
+   spring.datasource.url=jdbc:postgresql://localhost:5432/mydatabase
+   spring.datasource.username=postgres
+   spring.datasource.password=yourpassword
+   ```
+4. **Check your database:**
+   ```sh
+   docker exec -it my-postgres psql -U postgres -d mydatabase
+   ```
+   Then in the psql prompt:
+   ```sql
+   \dt
+   SELECT * FROM task;
+   \q
+   ```
+
+**Troubleshooting:**
+- If you see `address already in use`, stop the system PostgreSQL service or use a different port for Docker.
+- If you see CORS errors, update your backend CORS config to allow your frontend's Codespaces URL.
+- For Codespaces, always use Docker for a clean, user-controlled PostgreSQL instance.
