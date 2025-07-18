@@ -19,7 +19,12 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         for (String origin : allowedOrigins.split(",")) {
-            configuration.addAllowedOrigin(origin.trim());
+            String trimmedOrigin = origin.trim();
+            if (trimmedOrigin.contains("*")) {
+                configuration.addAllowedOriginPattern(trimmedOrigin);
+            } else {
+                configuration.addAllowedOrigin(trimmedOrigin);
+            }
         }
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
