@@ -5,11 +5,13 @@ function SignIn({ onSignIn }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const API_BASE = process.env.REACT_APP_API_BASE_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch("/api/auth/signin", {
+      const res = await fetch(`${API_BASE}/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

@@ -6,12 +6,14 @@ function SignUp({ onSignUp }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const API_BASE = process.env.REACT_APP_API_BASE_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     try {
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch(`${API_BASE}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
