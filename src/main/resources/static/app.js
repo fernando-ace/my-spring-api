@@ -1,4 +1,4 @@
-const apiUrl = "https://improved-fishstick-x54qgw47x75rcpw74-8080.app.github.dev/tasks";
+const apiUrl = "https://verbose-meme-5g9p7q9j5659f7vqj-8080.app.github.dev/api/tasks";
 const taskList = document.getElementById("task-list");
 const taskForm = document.getElementById("task-form");
 const taskNameInput = document.getElementById("task-name");

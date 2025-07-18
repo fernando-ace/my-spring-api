@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
+const API_BASE = process.env.REACT_APP_API_BASE_URL;
+
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
-
-  const API_BASE = "https://improved-fishstick-x54qgw47x75rcpw74-8080.app.github.dev/api";
 
   const fetchTasks = () => {
     setLoading(true);

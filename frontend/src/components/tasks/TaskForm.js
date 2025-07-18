@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const API_BASE = "https://improved-fishstick-x54qgw47x75rcpw74-8080.app.github.dev/api";
+const API_BASE = process.env.REACT_APP_API_BASE_URL;
 
 const TaskForm = ({ onTaskAdded }) => {
   const [title, setTitle] = useState("");

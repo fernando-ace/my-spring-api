@@ -1,82 +1,110 @@
-# TaskFlow: Modern Full-Stack Task Manager
+# TaskFlow
 
 > **Effortless productivity, engineered for the modern web.**
 
 ---
 
-## 🚀 Project Overview
+## Overview
 
-TaskFlow is a full-stack task management application designed to streamline personal productivity and showcase best practices in modern software engineering. Built with a robust Java Spring Boot backend and a sleek React + Tailwind CSS frontend, TaskFlow demonstrates clean architecture, RESTful API design, and seamless user experience. 
-
-**Problem Solved:**
-Managing daily tasks can be overwhelming without the right tools. TaskFlow provides a simple yet powerful interface for creating, editing, and tracking tasks, making it easy to stay organized and productive. The project also serves as a reference implementation for scalable, maintainable, and testable full-stack applications.
+**TaskFlow** is a modern, full-stack task management application that demonstrates best practices in scalable software engineering. It features a robust Java Spring Boot backend and a sleek React + Tailwind CSS frontend, all powered by a PostgreSQL database. TaskFlow is designed for easy local development, clean architecture, and a seamless user experience.
 
 ---
 
-## ✨ Key Features
+## Features
 
 - **Full CRUD Task Management:** Create, read, update, and delete tasks with instant feedback.
 - **Modern UI/UX:** Responsive, accessible, and visually appealing interface using React and Tailwind CSS.
-- **RESTful API:** Well-structured endpoints following REST conventions for easy integration and scalability.
+- **RESTful API:** Well-structured endpoints following REST conventions.
 - **State Management:** Efficient use of React hooks for local state and UI updates.
 - **Cross-Origin Support:** Secure CORS configuration for local and cloud development.
-- **In-Memory Database:** H2 database for rapid prototyping and testing.
+- **Database:** PostgreSQL for persistent storage, managed via Docker.
 - **Security Best Practices:** Configurable security with Spring Security.
 - **Component-Based Architecture:** Modular frontend and backend code for maintainability.
 - **Easy Local Setup:** Minimal configuration required to run locally.
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
-**Backend:**
-- Java 17
-- Spring Boot 3
-- Spring Data JPA
-- Spring Security
-- H2 Database (in-memory)
+### Backend
 
-**Frontend:**
-- JavaScript
-- React 19
-- Node.js 18
-- Tailwind CSS 3
-- PostCSS
+- **Language:** Java 17
+- **Framework:** Spring Boot 3
+- **ORM:** Spring Data JPA (Hibernate)
+- **Security:** Spring Security
+- **Database:** PostgreSQL (via Docker)
+- **Build Tool:** Maven
+- **Other:** JWT (io.jsonwebtoken), WebSocket-ready, Lombok
 
-**Build & Tooling:**
-- Maven
-- Create React App
-- JPA/Hibernate
-- Git & GitHub
+### Frontend
+
+- **Language:** JavaScript (ES6+)
+- **Framework:** React 19
+- **Styling:** Tailwind CSS 3, PostCSS, autoprefixer
+- **Testing:** React Testing Library, Jest
+- **Build Tool:** Create React App
 
 ---
 
-## ⚡ Getting Started
+## Getting Started
 
 ### Prerequisites
+
 - Java 17+
 - Node.js 18+
 - Maven 3.8+
+- Docker
 
-### Backend Setup
-```bash
-# From the project root
-cd my-spring-api
+---
+
+### 1. Set Up PostgreSQL with Docker
+
+**Start PostgreSQL in Docker:**
+
+```sh
+docker run --name my-postgres \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=yourpassword \
+  -e POSTGRES_DB=mydatabase \
+  -p 5432:5432 \
+  -d postgres:16
+```
+
+**Update the backend configuration** in `src/main/resources/application.properties` if you need to change credentials:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydatabase
+spring.datasource.username=postgres
+spring.datasource.password=yourpassword
+```
+
+> **Note:** If you are running TaskFlow in a Codespace or cloud environment, you may need to set the backend (8080) and/or database (5432) ports to public in your environment settings to allow external access from the frontend or your local machine.
+
+---
+
+### 2. Start the Backend
+
+```sh
 ./mvnw spring-boot:run
 ```
-The backend will start on [http://localhost:8080](http://localhost:8080)
 
-### Frontend Setup
-```bash
+The backend will be available at [http://localhost:8080](http://localhost:8080).
+
+---
+
+### 3. Start the Frontend
+
+```sh
 cd frontend
 npm install
 npm start
 ```
-The frontend will start on [http://localhost:3000](http://localhost:3000)
+
+The frontend will be available at [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 🖼️ Example Usage
+## Example Usage
 
 ![TaskFlow UI Screenshot](TaskFlow_UI.png)
 
@@ -86,44 +114,27 @@ The frontend will start on [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🏗️ Architecture & Design Decisions
+## Architecture
 
-- **REST API:** All task operations are exposed via `/api/tasks` endpoints, following RESTful principles.
+- **REST API:** All task operations are exposed via `/api/tasks` endpoints.
 - **Entity Modeling:** JPA entity (`Task`) with repository pattern for clean data access.
 - **Frontend State:** React hooks (`useState`, `useEffect`) for local state and side effects.
-- **CORS & Security:** Fine-tuned CORS and open security for development, easily extendable for production.
-- **Componentization:** Separation of concerns with dedicated components for forms, lists, and layout.
-- **Testing Ready:** Structure supports easy addition of unit and integration tests.
+- **CORS & Security:** Fine-tuned CORS and open security for development.
+- **Componentization:** Dedicated components for forms, lists, and layout.
 
 ---
 
-## 🧪 Testing & Deployment
+## Testing
 
-- **Backend:**
-  - Run `mvn test` for unit/integration tests (expandable for more coverage).
-- **Frontend:**
-  - Run `npm test` for React component tests.
-- **CI/CD:**
-  - Ready for integration with GitHub Actions, Jenkins, or other CI/CD tools.
-- **Deployment:**
-  - Easily deployable to cloud platforms (Heroku, AWS, Azure) with minimal changes.
+- **Backend:** `mvn test` for unit/integration tests.
+- **Frontend:** `npm test` for React component tests.
 
 ---
 
-## 🚀 Future Improvements
-
-- Persistent database support (PostgreSQL, MySQL)
-- User authentication & authorization (JWT, OAuth)
-- Real-time updates (WebSockets)
-- Advanced filtering, sorting, and search
-- Mobile-first enhancements
-- Comprehensive test coverage
-
----
-
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! To get started:
+
 1. Fork the repository
 2. Create a new branch (`git checkout -b feature/your-feature`)
 3. Commit your changes (`git commit -am 'Add new feature'`)
@@ -134,7 +145,7 @@ For major changes, please open an issue first to discuss your ideas.
 
 ---
 
-## 📬 Contact
+## Contact
 
 **Fernando (Project Author)**  
 [LinkedIn](https://www.linkedin.com/in/fernando-ace/)  
@@ -144,3 +155,23 @@ Email: FernandoJosueAcevedo@gmail.com
 ---
 
 > **Ready to see clean code and modern engineering in action? Clone TaskFlow, try it out, or get in touch to discuss software engineering opportunities!**
+
+---
+
+## Configuration for Any Environment
+
+To make TaskFlow work in any local, Codespaces, or cloud environment, configure the frontend and backend URLs as follows:
+
+### Frontend
+1. Copy `frontend/.env.example` to `frontend/.env`.
+2. Set `REACT_APP_API_BASE_URL` to your backend URL:
+   - For local: `http://localhost:8080/api`
+   - For Codespaces: `https://<your-codespace-id>-8080.app.github.dev/api`
+
+### Backend
+1. Edit `src/main/resources/application.properties`.
+2. Set `app.cors.allowed-origins` to your frontend URL(s), comma-separated if multiple:
+   - For local: `http://localhost:3000`
+   - For Codespaces: `https://<your-codespace-id>-3000.app.github.dev`
+
+> This allows anyone to run TaskFlow in their own environment without code changes—just update the environment variables and properties!
