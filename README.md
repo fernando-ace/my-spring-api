@@ -106,6 +106,8 @@ The frontend will be available at [http://localhost:3000](http://localhost:3000)
 
 ## Example Usage
 
+![TaskFlow UI Screenshot](TaskFlow_UI.png)
+
 - **Add a Task:** Enter a title and click "Add Task".
 - **Edit/Delete:** Use the edit and delete buttons next to each task.
 - **Mark Complete:** Check the box to mark a task as done.
