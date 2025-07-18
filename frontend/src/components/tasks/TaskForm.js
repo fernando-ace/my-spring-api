@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = process.env.REACT_APP_API_BASE_URL;
 
@@ -7,26 +8,35 @@ const TaskForm = ({ onTaskAdded }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    fetch(`${API_BASE}/tasks`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: title, completed: false }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to add task");
-        return res.json();
-      })
-      .then(() => {
-        onTaskAdded();
-        setTitle("");
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE}/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ name: title, completed: false }),
+      });
+      if (res.status === 401) {
+        navigate("/signin");
+        return;
+      }
+      if (!res.ok) throw new Error("Failed to add task");
+      setTitle("");
+      if (onTaskAdded) onTaskAdded();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

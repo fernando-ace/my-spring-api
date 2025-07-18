@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = process.env.REACT_APP_API_BASE_URL;
 
@@ -8,6 +9,8 @@ const TaskList = () => {
   const [error, setError] = useState(null);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
+
+  const navigate = useNavigate();
 
   const fetchTasks = () => {
     setLoading(true);
@@ -23,6 +26,26 @@ const TaskList = () => {
   };
 
   useEffect(() => {
+    const fetchTasks = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${API_BASE}/tasks`, {
+          headers: { "Authorization": `Bearer ${token}` },
+        });
+        if (res.status === 401) {
+          navigate("/signin");
+          return;
+        }
+        if (!res.ok) throw new Error("Failed to fetch tasks");
+        const data = await res.json();
+        setTasks(data);
+      } catch (err) {
+        setError(err.message);
+      }
+      setLoading(false);
+    };
     fetchTasks();
   }, []);
 
