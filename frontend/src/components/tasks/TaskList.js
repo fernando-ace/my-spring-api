@@ -34,6 +34,7 @@ const TaskList = () => {
       setError(null);
       try {
         const token = localStorage.getItem("token");
+        console.log("Token used for Authorization (fetchTasks):", token);
         const res = await fetch(`${API_BASE}/tasks`, {
           headers: { "Authorization": `Bearer ${token}` },
         });
