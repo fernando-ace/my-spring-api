@@ -33,8 +33,9 @@ public class TaskController {
     private User getUserFromToken(String token) {
         if (token == null || !token.startsWith("Bearer ")) return null;
         String jwt = token.substring(7);
-        Claims claims = Jwts.parser()
+        Claims claims = io.jsonwebtoken.Jwts.parserBuilder()
                 .setSigningKey(jwtSecret.getBytes())
+                .build()
                 .parseClaimsJws(jwt)
                 .getBody();
         String username = claims.getSubject();
