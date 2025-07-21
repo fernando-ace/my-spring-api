@@ -22,7 +22,7 @@ public class TaskController {
 
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
-    private final String jwtSecret = "mySecretKey";
+    private final String jwtSecret = "mySuperSecretKeyForJWTs1234567890!@#";
 
     @Autowired
     public TaskController(TaskRepository taskRepository, UserRepository userRepository) {
