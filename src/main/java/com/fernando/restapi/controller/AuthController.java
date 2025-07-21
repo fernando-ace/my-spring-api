@@ -19,7 +19,7 @@ import java.util.Map;
 public class AuthController {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    private final String jwtSecret = "mySecretKey"; // Use env var in production
+    private final String jwtSecret = "mySuperSecretKeyForJWTs1234567890!@#"; // Updated to be 32+ chars
     private final long jwtExpirationMs = 86400000; // 1 day
 
     @Autowired
