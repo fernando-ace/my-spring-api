@@ -12,51 +12,37 @@ const TaskList = () => {
 
   const navigate = useNavigate();
 
-  const fetchTasks = () => {
+  const fetchTasks = async () => {
     setLoading(true);
     setError(null);
-    fetch(`${API_BASE}/tasks`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch tasks");
-        return res.json();
-      })
-      .then((data) => {
-        setTasks(data);
-        setError(null); // Clear error on successful fetch
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    try {
+      const token = localStorage.getItem("token");
+      console.log("Token used for Authorization (fetchTasks):", token);
+      const res = await fetch(`${API_BASE}/tasks`, {
+        headers: { "Authorization": `Bearer ${token}` },
+      });
+      if (res.status === 401) {
+        navigate("/signin");
+        return;
+      }
+      if (!res.ok) throw new Error("Failed to fetch tasks");
+      const data = await res.json();
+      setTasks(data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const token = localStorage.getItem("token");
-        console.log("Token used for Authorization (fetchTasks):", token);
-        const res = await fetch(`${API_BASE}/tasks`, {
-          headers: { "Authorization": `Bearer ${token}` },
-        });
-        if (res.status === 401) {
-          navigate("/signin");
-          return;
-        }
-        if (!res.ok) throw new Error("Failed to fetch tasks");
-        const data = await res.json();
-        setTasks(data);
-      } catch (err) {
-        setError(err.message);
-      }
-      setLoading(false);
-    };
     fetchTasks();
   }, []);
 
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
     const token = localStorage.getItem("token");
-    fetch(`${API_BASE}/tasks/${id}`, {
+    await fetch(`${API_BASE}/tasks/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${token}` },
     })
@@ -77,10 +63,10 @@ const TaskList = () => {
     setEditTitle("");
   };
 
-  const saveEdit = (id) => {
+  const saveEdit = async (id) => {
     const token = localStorage.getItem("token");
     console.log("Token used for Authorization (saveEdit):", token);
-    fetch(`${API_BASE}/tasks/${id}`, {
+    await fetch(`${API_BASE}/tasks/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ name: editTitle, completed: false }),
@@ -94,10 +80,10 @@ const TaskList = () => {
       .catch((err) => alert(err.message));
   };
 
-  const toggleCompleted = (task) => {
+  const toggleCompleted = async (task) => {
     const token = localStorage.getItem("token");
     console.log("Token used for Authorization (toggleCompleted):", token);
-    fetch(`${API_BASE}/tasks/${task.id}`, {
+    await fetch(`${API_BASE}/tasks/${task.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ name: task.name, completed: !task.completed }),
