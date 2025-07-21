@@ -20,7 +20,10 @@ const TaskList = () => {
         if (!res.ok) throw new Error("Failed to fetch tasks");
         return res.json();
       })
-      .then((data) => setTasks(data))
+      .then((data) => {
+        setTasks(data);
+        setError(null); // Clear error on successful fetch
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   };
@@ -113,6 +116,7 @@ const TaskList = () => {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-gray-700">Tasks</h2>
+      {error && <p className="text-center text-red-600" role="alert">Error: {error}</p>}
       <ul className="space-y-2">
         {tasks.map((task) => (
           <li
