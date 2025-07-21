@@ -51,8 +51,11 @@ const TaskList = () => {
 
   const deleteTask = (id) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
-
-    fetch(`${API_BASE}/tasks/${id}`, { method: "DELETE" })
+    const token = localStorage.getItem("token");
+    fetch(`${API_BASE}/tasks/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to delete task");
         fetchTasks();
@@ -71,9 +74,10 @@ const TaskList = () => {
   };
 
   const saveEdit = (id) => {
+    const token = localStorage.getItem("token");
     fetch(`${API_BASE}/tasks/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ name: editTitle, completed: false }),
     })
       .then((res) => {
@@ -86,9 +90,10 @@ const TaskList = () => {
   };
 
   const toggleCompleted = (task) => {
+    const token = localStorage.getItem("token");
     fetch(`${API_BASE}/tasks/${task.id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ name: task.name, completed: !task.completed }),
     })
       .then((res) => {
