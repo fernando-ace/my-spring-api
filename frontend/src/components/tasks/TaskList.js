@@ -75,6 +75,7 @@ const TaskList = () => {
 
   const saveEdit = (id) => {
     const token = localStorage.getItem("token");
+    console.log("Token used for Authorization (saveEdit):", token);
     fetch(`${API_BASE}/tasks/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
@@ -91,6 +92,7 @@ const TaskList = () => {
 
   const toggleCompleted = (task) => {
     const token = localStorage.getItem("token");
+    console.log("Token used for Authorization (toggleCompleted):", token);
     fetch(`${API_BASE}/tasks/${task.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
