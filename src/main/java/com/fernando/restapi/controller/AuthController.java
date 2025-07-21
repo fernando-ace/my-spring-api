@@ -44,7 +44,10 @@ public class AuthController {
         String username = userMap.get("username");
         String password = userMap.get("password");
         User user = userRepository.findByUsername(username);
-        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+        if (user == null) {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
         String token = Jwts.builder()
