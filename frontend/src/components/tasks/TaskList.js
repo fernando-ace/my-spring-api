@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = process.env.REACT_APP_API_BASE_URL;
 
@@ -9,27 +10,42 @@ const TaskList = () => {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
 
-  const fetchTasks = () => {
+  const navigate = useNavigate();
+
+  const fetchTasks = async () => {
     setLoading(true);
     setError(null);
-    fetch(`${API_BASE}/tasks`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch tasks");
-        return res.json();
-      })
-      .then((data) => setTasks(data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    try {
+      const token = localStorage.getItem("token");
+      console.log("Token used for Authorization (fetchTasks):", token);
+      const res = await fetch(`${API_BASE}/tasks`, {
+        headers: { "Authorization": `Bearer ${token}` },
+      });
+      if (res.status === 401) {
+        navigate("/signin");
+        return;
+      }
+      if (!res.ok) throw new Error("Failed to fetch tasks");
+      const data = await res.json();
+      setTasks(data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
-
-    fetch(`${API_BASE}/tasks/${id}`, { method: "DELETE" })
+    const token = localStorage.getItem("token");
+    await fetch(`${API_BASE}/tasks/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to delete task");
         fetchTasks();
@@ -47,10 +63,12 @@ const TaskList = () => {
     setEditTitle("");
   };
 
-  const saveEdit = (id) => {
-    fetch(`${API_BASE}/tasks/${id}`, {
+  const saveEdit = async (id) => {
+    const token = localStorage.getItem("token");
+    console.log("Token used for Authorization (saveEdit):", token);
+    await fetch(`${API_BASE}/tasks/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ name: editTitle, completed: false }),
     })
       .then((res) => {
@@ -62,10 +80,12 @@ const TaskList = () => {
       .catch((err) => alert(err.message));
   };
 
-  const toggleCompleted = (task) => {
-    fetch(`${API_BASE}/tasks/${task.id}`, {
+  const toggleCompleted = async (task) => {
+    const token = localStorage.getItem("token");
+    console.log("Token used for Authorization (toggleCompleted):", token);
+    await fetch(`${API_BASE}/tasks/${task.id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ name: task.name, completed: !task.completed }),
     })
       .then((res) => {
@@ -83,6 +103,7 @@ const TaskList = () => {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-gray-700">Tasks</h2>
+      {error && <p className="text-center text-red-600" role="alert">Error: {error}</p>}
       <ul className="space-y-2">
         {tasks.map((task) => (
           <li
