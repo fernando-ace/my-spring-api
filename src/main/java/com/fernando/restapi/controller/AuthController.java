@@ -43,11 +43,16 @@ public class AuthController {
     public ResponseEntity<?> signin(@RequestBody Map<String, String> userMap) {
         String username = userMap.get("username");
         String password = userMap.get("password");
+        System.out.println("Attempting login for username: " + username);
         User user = userRepository.findByUsername(username);
+        System.out.println("User found: " + (user != null));
         if (user == null) {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        System.out.println("Stored hash: " + user.getPassword());
+        boolean matches = passwordEncoder.matches(password, user.getPassword());
+        System.out.println("Password matches: " + matches);
+        if (!matches) {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
         String token = Jwts.builder()
