@@ -55,14 +55,20 @@ public class AuthController {
         if (!matches) {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
-        String token = Jwts.builder()
+        try {
+            String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes())
                 .compact();
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-        return ResponseEntity.ok(response);
+            System.out.println("Generated token: " + token);
+            Map<String, String> response = new HashMap<>();
+            response.put("token", token);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("JWT generation failed: " + e.getMessage());
+        }
     }
 } 
