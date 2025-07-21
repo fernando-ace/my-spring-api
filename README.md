@@ -1,156 +1,64 @@
 # TaskFlow
 
-> **Effortless productivity, engineered for the modern web.**
+A modern, full-stack task management web application.
+
+[**Live App →**](https://my-spring-api.vercel.app/)
 
 ---
 
-## Overview
-
-**TaskFlow** is a modern, full-stack task management application that demonstrates best practices in scalable software engineering. It features a robust Java Spring Boot backend and a sleek React + Tailwind CSS frontend, all powered by a PostgreSQL database. TaskFlow is designed for easy local development, clean architecture, and a seamless user experience.
-
----
-
-## Features
-
-- **Full CRUD Task Management:** Create, read, update, and delete tasks with instant feedback.
-- **Modern UI/UX:** Responsive, accessible, and visually appealing interface using React and Tailwind CSS.
-- **RESTful API:** Well-structured endpoints following REST conventions.
-- **State Management:** Efficient use of React hooks for local state and UI updates.
-- **Cross-Origin Support:** Secure CORS configuration for local and cloud development.
-- **Database:** PostgreSQL for persistent storage, managed via Docker.
-- **Security Best Practices:** Configurable security with Spring Security.
-- **Component-Based Architecture:** Modular frontend and backend code for maintainability.
-- **Easy Local Setup:** Minimal configuration required to run locally.
+## 🚀 Overview
+TaskFlow is a full-stack web app for managing personal tasks. Each user can sign up, sign in, and manage their own private tasks. The app is deployed and live—no local setup required!
 
 ---
 
-## Technology Stack
+## 🛠️ Tech Stack
 
-### Backend
+**Frontend:**
+- React (with Hooks)
+- Tailwind CSS (for modern, responsive UI)
+- React Router DOM (for navigation)
+- Fetch API (for HTTP requests)
 
-- **Language:** Java 17
-- **Framework:** Spring Boot 3
-- **ORM:** Spring Data JPA (Hibernate)
-- **Security:** Spring Security
-- **Database:** PostgreSQL (via Docker)
-- **Build Tool:** Maven
-- **Other:** JWT (io.jsonwebtoken), WebSocket-ready, Lombok
+**Backend:**
+- Spring Boot (Java)
+- Spring Security (JWT authentication)
+- JPA/Hibernate (ORM)
+- PostgreSQL (database)
 
-### Frontend
-
-- **Language:** JavaScript (ES6+)
-- **Framework:** React 19
-- **Styling:** Tailwind CSS 3, PostCSS, autoprefixer
-- **Testing:** React Testing Library, Jest
-- **Build Tool:** Create React App
+**Deployment & Hosting:**
+- **Frontend:** Vercel ([my-spring-api.vercel.app](https://my-spring-api.vercel.app/))
+- **Backend:** Railway (Spring Boot API + PostgreSQL)
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- Java 17+
-- Node.js 18+
-- Maven 3.8+
-- Docker
+## ✨ Features
+- **User Authentication:** Sign up and sign in with secure password hashing (BCrypt) and JWT-based authentication.
+- **Per-User Tasks:** Each user has their own private task list—no more shared tasks!
+- **CRUD Operations:** Create, read, update, and delete your own tasks.
+- **Modern UI:** Clean, responsive design with Tailwind CSS.
+- **Secure API:** All task endpoints are protected and require a valid JWT.
+- **Cloud Deployment:**
+  - **Frontend** is hosted on Vercel for fast, global delivery.
+  - **Backend** is hosted on Railway, with a managed PostgreSQL database.
 
 ---
 
-### 1. Set Up PostgreSQL with Docker
+## 🌐 Access the App
 
-**Start PostgreSQL in Docker:**
+👉 [https://my-spring-api.vercel.app/](https://my-spring-api.vercel.app/)
 
-```sh
-docker run --name my-postgres \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=yourpassword \
-  -e POSTGRES_DB=mydatabase \
-  -p 5432:5432 \
-  -d postgres:16
+- Sign up for a new account or sign in to manage your tasks.
+- All data is private to your account.
+
+---
+
+## 📦 Project Structure
+
 ```
-
-**Update the backend configuration** in `src/main/resources/application.properties` if you need to change credentials:
-
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/mydatabase
-spring.datasource.username=postgres
-spring.datasource.password=yourpassword
+my-spring-api/
+  ├── frontend/         # React app (UI)
+  └── src/main/java/    # Spring Boot backend (API)
 ```
-
-> **Note:** If you are running TaskFlow in a Codespace or cloud environment, you may need to set the backend (8080) and/or database (5432) ports to public in your environment settings to allow external access from the frontend or your local machine.
-
----
-
-### 2. Start the Backend
-
-```sh
-./mvnw spring-boot:run
-```
-
-The backend will be available at [http://localhost:8080](http://localhost:8080).
-
----
-
-### 3. Start the Frontend
-
-```sh
-cd frontend
-npm install
-npm start
-```
-
-The frontend will be available at [http://localhost:3000](http://localhost:3000).
-
----
-
-## Example Usage
-
-![TaskFlow UI Screenshot](TaskFlow_UI.png)
-
-- **Add a Task:** Enter a title and click "Add Task".
-- **Edit/Delete:** Use the edit and delete buttons next to each task.
-- **Mark Complete:** Check the box to mark a task as done.
-
----
-
-## Architecture
-
-- **REST API:** All task operations are exposed via `/api/tasks` endpoints.
-- **Entity Modeling:** JPA entity (`Task`) with repository pattern for clean data access.
-- **Frontend State:** React hooks (`useState`, `useEffect`) for local state and side effects.
-- **CORS & Security:** Fine-tuned CORS and open security for development.
-- **Componentization:** Dedicated components for forms, lists, and layout.
-
----
-
-## Testing
-
-- **Backend:** `mvn test` for unit/integration tests.
-- **Frontend:** `npm test` for React component tests.
-
----
-
-## Contributing
-
-Contributions are welcome! To get started:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a Pull Request
-
-For major changes, please open an issue first to discuss your ideas.
-
----
-
-## Contact
-
-**Fernando (Project Author)**  
-[LinkedIn](https://www.linkedin.com/in/fernando-ace/)  
-[GitHub](https://github.com/fernando-ace)  
-Email: FernandoJosueAcevedo@gmail.com
 
 ---
 
@@ -158,20 +66,5 @@ Email: FernandoJosueAcevedo@gmail.com
 
 ---
 
-## Configuration for Any Environment
-
-To make TaskFlow work in any local, Codespaces, or cloud environment, configure the frontend and backend URLs as follows:
-
-### Frontend
-1. Copy `frontend/.env.example` to `frontend/.env`.
-2. Set `REACT_APP_API_BASE_URL` to your backend URL:
-   - For local: `http://localhost:8080/api`
-   - For Codespaces: `https://<your-codespace-id>-8080.app.github.dev/api`
-
-### Backend
-1. Edit `src/main/resources/application.properties`.
-2. Set `app.cors.allowed-origins` to your frontend URL(s), comma-separated if multiple:
-   - For local: `http://localhost:3000`
-   - For Codespaces: `https://<your-codespace-id>-3000.app.github.dev`
-
-> This allows anyone to run TaskFlow in their own environment without code changes—just update the environment variables and properties!
+## 📄 License
+This project is licensed under the MIT License.
