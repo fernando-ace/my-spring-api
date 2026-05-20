@@ -61,6 +61,7 @@ The frontend and backend deployments were taken down, but the project remains a 
 my-spring-api/
   ├── frontend/         # React frontend
   └── src/main/java/    # Spring Boot backend
+```
 
 ---
 
