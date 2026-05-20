@@ -1,70 +1,88 @@
 # TaskFlow
 
-A modern, full-stack task management web application.
-
-[**Live App →**](https://my-spring-api.vercel.app/)
+A full-stack task management web application built with React, Spring Boot, JWT authentication, and PostgreSQL.
 
 ---
 
-## 🚀 Overview
-TaskFlow is a full-stack web app for managing personal tasks. Each user can sign up, sign in, and manage their own private tasks. The app is deployed and live—no local setup required!
+## Overview
+
+TaskFlow is a portfolio project that allows users to create an account, sign in, and manage a private task list.
+
+The app was previously deployed with the frontend on Vercel and the backend on Railway. Those deployments have since been taken down, so the project is no longer available as a live app. The source code remains available to show the full-stack architecture, authentication flow, protected API routes, and database-backed task management system.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-**Frontend:**
-- React (with Hooks)
-- Tailwind CSS (for modern, responsive UI)
-- React Router DOM (for navigation)
-- Fetch API (for HTTP requests)
+**Frontend**
+- React
+- Tailwind CSS
+- React Router DOM
+- Fetch API
 
-**Backend:**
-- Spring Boot (Java)
-- Spring Security (JWT authentication)
-- JPA/Hibernate (ORM)
-- PostgreSQL (database)
+**Backend**
+- Spring Boot
+- Spring Security
+- JWT authentication
+- JPA/Hibernate
+- PostgreSQL
 
-**Deployment & Hosting:**
-- **Frontend:** Vercel ([my-spring-api.vercel.app](https://my-spring-api.vercel.app/))
-- **Backend:** Railway (Spring Boot API + PostgreSQL)
-
----
-
-## ✨ Features
-- **User Authentication:** Sign up and sign in with secure password hashing (BCrypt) and JWT-based authentication.
-- **Per-User Tasks:** Each user has their own private task list—no more shared tasks!
-- **CRUD Operations:** Create, read, update, and delete your own tasks.
-- **Modern UI:** Clean, responsive design with Tailwind CSS.
-- **Secure API:** All task endpoints are protected and require a valid JWT.
-- **Cloud Deployment:**
-  - **Frontend** is hosted on Vercel for fast, global delivery.
-  - **Backend** is hosted on Railway, with a managed PostgreSQL database.
+**Former Deployment**
+- Frontend: Vercel
+- Backend: Railway
+- Database: Railway PostgreSQL
 
 ---
 
-## 🌐 Access the App
+## Features
 
-👉 [https://my-spring-api.vercel.app/](https://my-spring-api.vercel.app/)
-
-- Sign up for a new account or sign in to manage your tasks.
-- All data is private to your account.
+- User sign-up and sign-in
+- Secure password hashing with BCrypt
+- JWT-based authentication
+- Private per-user task lists
+- Create, read, update, and delete tasks
+- Protected backend API routes
+- Responsive React interface
+- PostgreSQL database persistence
 
 ---
 
-## 📦 Project Structure
+## Project Status
 
-```
+TaskFlow is no longer hosted publicly.
+
+The frontend and backend deployments were taken down, but the project remains a completed full-stack portfolio project. It demonstrates how to build a secure task management app with a React frontend, Spring Boot REST API, JWT authentication, and PostgreSQL database integration.
+
+---
+
+## Project Structure
+
+```text
 my-spring-api/
-  ├── frontend/         # React app (UI)
-  └── src/main/java/    # Spring Boot backend (API)
-```
+  ├── frontend/         # React frontend
+  └── src/main/java/    # Spring Boot backend
 
 ---
 
-> **Ready to see clean code and modern engineering in action? Clone TaskFlow, try it out, or get in touch to discuss software engineering opportunities!**
+## Running Locally
+
+To run the project locally, install:
+
+- Java
+- Maven
+- Node.js
+- PostgreSQL
+
+Basic setup:
+
+1. Clone the repository.
+2. Configure the backend PostgreSQL connection.
+3. Start the Spring Boot backend.
+4. Install frontend dependencies.
+5. Start the React frontend.
 
 ---
 
-## 📄 License
+## License
+
 This project is licensed under the MIT License.
